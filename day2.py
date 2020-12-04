@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
 
 def tests():
-    assert isValid("0-1 a: ")
-    assert not isValid("0-0 a: a")
+    assert PasswordDownTheStreet("0-1 a: ").isValid()
+    assert not PasswordDownTheStreet("0-0 a: a").isValid()
 
 def main():
     passwords = readFile("inputs/day2.txt")
     validCount = 0
     for p in passwords:
-        if Password(p).isValid():
+        if PasswordDownTheStreet(p).isValid():
             validCount += 1
 
     print(validCount)
 
-def isValid(s):
-    password = Password(s)
-    return password.isValid()
 
-class Password():
+class PasswordDownTheStreet():
     def __init__(self, s):
         range, letter, self.pwd = s.split(" ")
         self.min, self.max = [int(s) for s in range.split("-")]
