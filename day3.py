@@ -4,9 +4,17 @@ from map import Map
 
 def main():
     input = readFile("inputs/day3.txt")
-    map = Map(input)
 
-    print(countTrees(map, (3, 1)))
+    trees = []
+    for move in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
+        map = Map(input)
+        trees.append(countTrees(map, move))
+
+    product = 1
+    for t in trees:
+        product *= t
+
+    print(product)
 
 
 def countTrees(map, move):
