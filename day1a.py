@@ -2,7 +2,6 @@
 
 def main():
     numbers = readFile("inputs/day1a.txt")
-    print(numbers)
     a, b = findPair(numbers, 2020)
     print(a * b)
 
