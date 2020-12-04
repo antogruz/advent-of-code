@@ -4,14 +4,20 @@ def tests():
     assert PasswordDownTheStreet("0-1 a: ").isValid()
     assert not PasswordDownTheStreet("0-0 a: a").isValid()
 
+
 def main():
     passwords = readFile("inputs/day2.txt")
-    validCount = 0
-    for p in passwords:
-        if PasswordDownTheStreet(p).isValid():
-            validCount += 1
+    downTheStreet = [ PasswordDownTheStreet(p) for p in passwords ]
 
-    print(validCount)
+    print(countValids(downTheStreet))
+
+
+def countValids(passwords):
+    count = 0
+    for p in passwords:
+        if p.isValid():
+            count += 1
+    return count
 
 
 class PasswordDownTheStreet():
@@ -27,6 +33,7 @@ class PasswordDownTheStreet():
     def toString(self):
         return str(self.min) + " " + str(self.max) + " " + self.letter + " " + self.pwd
 
+
 def count(char, string):
     count = 0
     for c in string:
@@ -39,7 +46,6 @@ def count(char, string):
 def readFile(f):
     with open(f, 'r') as fh:
         return fh.readlines()
-
 
 
 tests()
