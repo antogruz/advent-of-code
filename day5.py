@@ -6,6 +6,18 @@ from input import readFile
 def main():
     seats = readFile("inputs/day5.txt")
     print(findHighest(seats))
+    findMissing(seats)
+
+def findMissing(seats):
+    ids = [id(seat) for seat in seats]
+    ids.sort()
+    missing = []
+    for i in range(1023):
+        if not i in ids:
+            missing.append(i)
+
+    print(missing)
+
 
 def findHighest(seats):
     max = 0
