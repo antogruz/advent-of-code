@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from valid import countValids
+
 def tests():
     assert PasswordDownTheStreet("0-1 a: ").isValid()
     assert not PasswordDownTheStreet("0-0 a: a").isValid()
@@ -19,14 +21,6 @@ def main():
 
     toboggans = [Toboggan(p) for p in passwords]
     print(countValids(toboggans))
-
-
-def countValids(passwords):
-    count = 0
-    for p in passwords:
-        if p.isValid():
-            count += 1
-    return count
 
 
 class PasswordDownTheStreet():
