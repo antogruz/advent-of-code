@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from valid import countValids
+from input import readFile
 
 def tests():
     assert PasswordDownTheStreet("0-1 a: ").isValid()
@@ -63,11 +64,6 @@ def count(char, string):
             count += 1
 
     return count
-
-
-def readFile(f):
-    with open(f, 'r') as fh:
-        return fh.readlines()
 
 
 tests()
