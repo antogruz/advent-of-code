@@ -5,12 +5,15 @@ from input import readFile
 
 def main():
     seats = readFile("inputs/day5.txt")
+    print(findHighest(seats))
+
+def findHighest(seats):
     max = 0
     for s in seats:
         n = id(s)
         if n > max:
             max = n
-    print(max)
+    return max
 
 
 def id(seat):
