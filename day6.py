@@ -10,19 +10,30 @@ def tests():
     assert_equals(2, countYesInGroup(["a", "ab"]))
     assert_equals(3, countYesInGroup(["a", "bc"]))
 
+    assert_equals(0, countAllYesInGroup([""]))
+    assert_equals(1, countAllYesInGroup(["a"]))
+    assert_equals(1, countAllYesInGroup(["a", "a"]))
+    assert_equals(2, countAllYesInGroup(["ab", "ab", "abc"]))
+    assert_equals(0, countAllYesInGroup(["a", "ab", "c"]))
+
 
 def main():
     groups = readFileByGroups("inputs/day6.txt")
 
-    print(countAnswers(groups))
+    print(countAnswers(groups, countYesInGroup))
+    print(countAnswers(groups, countAllYesInGroup))
 
-def countAnswers(groups):
+def countAnswers(groups, counter):
     count = 0
     for g in groups:
-        members = g.split("\n")
-        count += countYesInGroup(members)
+        count += counter(splitMembers(g))
     return count
 
+def splitMembers(group):
+    members = group.split("\n")
+    if "" in members:
+        members.remove("")
+    return members
 
 def countYesInGroup(members):
     if not members:
@@ -35,6 +46,20 @@ def countYesInGroup(members):
                 answers.append(answer)
 
     return len(answers)
+
+def countAllYesInGroup(members):
+    count = 0
+    for letter in "abcdefghijklmnopqrstuvwxyz":
+        if allSaidYes(members, letter):
+            count += 1
+
+    return count
+
+def allSaidYes(members, letter):
+    for m in members:
+        if not letter in m:
+            return False
+    return True
 
 
 
