@@ -26,14 +26,8 @@ def main():
 def countAnswers(groups, counter):
     count = 0
     for g in groups:
-        count += counter(splitMembers(g))
+        count += counter(g)
     return count
-
-def splitMembers(group):
-    members = group.split("\n")
-    if "" in members:
-        members.remove("")
-    return members
 
 def countYesInGroup(members):
     if not members:

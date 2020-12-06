@@ -2,10 +2,10 @@
 
 from valid import countValids
 from passport import SimplePassport, ComplexPassport
-from input import readFileByGroups
+from input import readFileByBlocks
 
 def main():
-    input = readFileByGroups("inputs/day4.txt")
+    input = readFileByBlocks("inputs/day4.txt")
     simplePassports = [SimplePassport(s) for s in input]
 
     print(countValids(simplePassports))
