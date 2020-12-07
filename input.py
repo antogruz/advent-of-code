@@ -4,6 +4,10 @@ def readFile(f):
     with open(f, 'r') as fh:
         return fh.readlines()
 
+def readLines(f):
+    with open(f, 'r') as fh:
+        return fh.read().splitlines()
+
 def readFileByBlocks(f):
     with open(f) as fh:
         return fh.read().split("\n\n")
