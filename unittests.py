@@ -1,18 +1,30 @@
+#!/usr/bin/env python3
+
+def runTests(tester):
+    methodNames = findAllMethods(tester)
+    testNames = [m for m in methodNames if "test" in m]
+    for test in testNames:
+        print(test)
+        if "__before__" in methodNames:
+            tester.__before__()
+        getattr(tester, test)()
+
+
+def assertEquals(expected, actual):
+    if expected != actual:
+        raise Exception("Expected", expected, "got", actual)
+
+def assertContains(expected, collection):
+    if expected not in collection:
+        raise Exception("Expected", expected, "to be in", collection)
+
+def assertSimilars(expected, actual):
+    if not len(expected) == len(actual):
+        raise Exception("Expected size of {}, but got {}. So actual {} is not similar to expected {}".format(len(expected), len(actual), actual, expected))
+    for e in expected:
+        assert_contains(e, actual)
+
+
 def findAllMethods(object):
     return [method for method in dir(object) if callable(getattr(object, method))]
 
-
-class Tester:
-    def runTests(self):
-        methodNames = findAllMethods(self)
-        testNames = [m for m in methodNames if "test" in m]
-        for test in testNames:
-            print(test)
-            self.__init__()
-            getattr(self, test)()
-
-
-def assert_equals(expected, actual):
-    if expected != actual:
-        print("Expected", expected, "got", actual)
-        raise Exception("Error in test")
