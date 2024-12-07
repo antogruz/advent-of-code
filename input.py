@@ -2,7 +2,7 @@
 
 def readFile(f):
     with open(f, 'r') as fh:
-        return fh.readlines()
+        return fh.read()
 
 def readLines(f):
     with open(f, 'r') as fh:
