@@ -30,26 +30,28 @@ def linesToColumns(lines):
     return columns
 
 def countDiagonals(lines):
-    diags = linesToDiags(lines)
-    return countLines(diags)
-
-def linesToDiags(lines):
     if not lines:
-        return lines
+        return 0
+    return countLines(downRightDiagonals(lines) + upRightDiagonals(lines))
+
+def downRightDiagonals(lines):
     diags = []
-    for i in range(len(lines[0])):
+    for i in range(1, len(lines[0])):
         diags.append(getDownRightDiag(lines, i, 0))
-        diags.append(getDownLeftDiag(lines, i, 0))
     for j in range(len(lines)):
         diags.append(getDownRightDiag(lines, 0, j))
-        diags.append(getDownLeftDiag(lines, len(lines[0]) - 1, j))
+    return diags
+
+def upRightDiagonals(lines):
+    diags = []
+    for i in range(len(lines[0])):
+        diags.append(getUpRightDiag(lines, i, len(lines) -1))
+    for j in range(len(lines) - 1):
+        diags.append(getUpRightDiag(lines, 0, j))
     return diags
 
 def getDownRightDiag(lines, i, j):
     return getDiag(lines, i, 1, j, 1)
-
-def getDownLeftDiag(lines, i, j):
-    return getDiag(lines, i, -1, j, 1)
 
 def getUpRightDiag(lines, i, j):
     return getDiag(lines, i, 1, j, -1)
@@ -59,13 +61,16 @@ def getDiag(lines, i, iDirection, j, jDirection):
     increment = 0
     while True:
         try:
-            diag.append(lines[j + increment * jDirection][i + increment * iDirection])
+            iTarget = i + increment * iDirection
+            jTarget = j + increment * jDirection
+            if iTarget < 0 or jTarget < 0:
+                return "".join(diag)
+            diag.append(lines[jTarget][iTarget])
             increment += 1
         except IndexError:
             return "".join(diag)
 
 
-import re
 def countHorizontal(line):
     return line.count("XMAS") + line.count("SAMX")
 
@@ -89,7 +94,10 @@ class Tester:
     def testVertical(self):
         assertEquals(1, countXmas(["X", "M", "A", "S"]))
 
-    def testDiagonal(self):
+    def testDownRightDiagonal(self):
+        assertEquals(3, countXmas(["XX...", "XMM..", ".MAA.", "..ASS", "...S."]))
+
+    def testUpRightDiagonal(self):
         assertEquals(1, countXmas(["...S", "..A.", ".M..", "X..."]))
 
     def testOfficial(self):
