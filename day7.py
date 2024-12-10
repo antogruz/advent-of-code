@@ -28,7 +28,7 @@ def isPossible(result, elements):
     return stillPossible(result, elements[0], elements[1:])
 
 def stillPossible(result, currentResult, elements):
-    operations = [add, multiply]
+    operations = [add, multiply, concat]
     if not elements:
         return result == currentResult
     for operation in operations:
@@ -42,6 +42,8 @@ def add(a, b):
 def multiply(a, b):
     return a * b
 
+def concat(a, b):
+    return int(str(a) + str(b))
 
 class Tester:
     def testNoOperation(self):
@@ -67,8 +69,8 @@ class ExampleTester:
         self.equations.append((292, [11,6,16,20]))
 
     def testComputation(self):
-        assertEquals(3749, computeResult(self.equations))
-        #assertEquals(11387, computeResult(self.equations))
+        #assertEquals(3749, computeResult(self.equations))
+        assertEquals(11387, computeResult(self.equations))
 
 
 
