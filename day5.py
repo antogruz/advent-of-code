@@ -36,8 +36,6 @@ def check(rule, report):
     relevantReport = [ element for element in report if element in rule]
     if len(relevantReport) < 2:
         return True
-    if len(relevantReport) > 2:
-        print("Whaaaaat?")
 
     for i in range(2):
         if rule[i] != relevantReport[i]:
