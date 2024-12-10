@@ -8,6 +8,7 @@ def main():
     rules = [parseRule(r) for r in groups[0]]
     reports = [parseReport(r) for r in groups[1]]
     print(computeResult(rules, reports))
+    print(computeInvalidReports(rules, reports))
 
 def computeResult(rules, reports):
     result = 0
@@ -16,15 +17,25 @@ def computeResult(rules, reports):
             result += int(middleElement(report))
     return result
 
+def computeInvalidReports(rules, reports):
+    result = 0
+    for report in reports:
+        if not isReportValid(rules, report):
+            while not isReportValid(rules, report):
+                for rule in rules:
+                    report = apply(rule, report)
+            result += int(middleElement(report))
+    return result
+
 def middleElement(l):
     return l[int(len(l) / 2)]
 
 def parseRule(r):
     elements = r.split("|")
-    return (elements[0], elements[1])
+    return (int(elements[0]), int(elements[1]))
 
 def parseReport(r):
-    return r.split(",")
+    return [int(e) for e in r.split(",")]
 
 def isReportValid(rules, report):
     for rule in rules:
@@ -42,6 +53,20 @@ def check(rule, report):
             return False
     return True
 
+def apply(rule, report):
+    if not check(rule, report):
+        return permute(report, rule[0], rule[1])
+    return report
+
+
+def permute(l, a, b):
+    aPosition = l.index(a)
+    bPosition = l.index(b)
+    l[aPosition] = b
+    l[bPosition] = a
+    return l
+
+
 class Tester:
     def testEmptyReport(self):
         assertEquals(True, isReportValid([], []))
@@ -55,7 +80,6 @@ class Tester:
     def testValidReport(self):
         assertEquals(True, isReportValid([(1, 2)], [1, 2]))
         assertEquals(True, isReportValid([(1, 2)], [1, 3]))
-
 
 
 class ExampleTester:
@@ -102,8 +126,8 @@ class ExampleTester:
     def testResult(self):
         assertEquals(143, computeResult(self.rules, self.reports))
 
-
-
+    def testSecondResult(self):
+        assertEquals(123, computeInvalidReports(self.rules, self.reports))
 
 
 runTests(Tester())
