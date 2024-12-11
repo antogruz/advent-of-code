@@ -22,7 +22,7 @@ def assertSimilars(expected, actual):
     if not len(expected) == len(actual):
         raise Exception("Expected size of {}, but got {}. So actual {} is not similar to expected {}".format(len(expected), len(actual), actual, expected))
     for e in expected:
-        assert_contains(e, actual)
+        assertContains(e, actual)
 
 
 def findAllMethods(object):
