@@ -9,14 +9,25 @@ def main():
     stones = "112 1110 163902 0 7656027 83039 9 74".split()
     stones = [ int(s) for s in stones ]
     print(stones)
-    print(countStonesAfterBlinks(stones, 75))
+    print(countStonesAfterBlinks(stones, 40))
+#    print(countStonesAfterBlinks(stones, 75))
 
 
-def countStonesAfterBlinks(stones, count):
+def countStonesAfterBlinks(stones, stepsLeft):
+    if stepsLeft == 0:
+        return len(stones)
+    d = getCountOfEachOccurence(stones)
     result = 0
-    for s in stones:
-        result += countAfterBlink(s, count)
+    for stone, count in d.items():
+        result += count * countStonesAfterBlinks(blink([stone]), stepsLeft - 1)
     return result
+
+def getCountOfEachOccurence(l):
+    d = {}
+    for element in list(set(l)):
+        d[element] = l.count(element)
+    return d
+
 
 def countAfterBlink(stone, count):
     stones = [stone]
@@ -26,6 +37,7 @@ def countAfterBlink(stone, count):
         if len(stones) > limit:
             return countStonesAfterBlinks(stones[0:int(limit/2)], count - i - 1) + countStonesAfterBlinks(stones[int(limit/2):], count -i - 1)
     return len(stones)
+
 
 def blink(stones):
     result = []
